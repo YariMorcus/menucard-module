@@ -1,0 +1,35 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  HetBonteHert\Module\MenuCard\Controller\:
+    resource: '../../Controller'
+    public: true
+    tags: [ 'controller.service_arguments' ]
+
+  HetBonteHert\Module\MenuCard\Repository\:
+    resource: '../../Repository'
+
+  HetBonteHert\Module\MenuCard\Form\:
+    resource: '../../Form'
+    tags: [ 'form.type' ]
+
+  HetBonteHert\Module\MenuCard\EventListener\ConfigureSideMenuListener:
+    tags:
+      - { name: kernel.event_listener, event: admin_module.side_menu_configure_modules, method: onSideMenuConfigure, priority: 115}
+
+  HetBonteHert\Module\MenuCard\EventListener\CategoryListener:
+    tags:
+      - { name: doctrine.event_listener, connection: default, event: preRemove, priority: 10, lazy: true }
+
+  HetBonteHert\Module\MenuCard\Module\MenuPageModule:
+      tags:
+        - { name: core.module }
+
+  HetBonteHert\Module\MenuCard\EventListener\StructureEventListener:
+      tags:
+        - { name: doctrine.event_listener, connection: default, event: postPersist, priority: 10, lazy: true }
+        - { name: doctrine.event_listener, connection: default, event: postFlush, priority: 10, lazy: true }
+        - { name: doctrine.event_listener, connection: default, event: preRemove, priority: 10, lazy: true }

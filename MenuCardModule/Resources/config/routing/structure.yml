@@ -1,0 +1,7 @@
+# routes.yml
+_overview:
+    path: /
+    defaults:
+        _controller: HetBonteHert\Module\MenuCard\Controller\MenuPageController::detail
+        _viewType: 1
+    methods: ['get']

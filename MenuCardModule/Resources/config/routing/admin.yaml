@@ -1,0 +1,9 @@
+_menu_card.admin.dish:
+    resource: "@MenuCardBundle/Controller"
+    prefix:   /dish
+_menu_card.admin.category:
+    resource: "@MenuCardBundle/Controller"
+    prefix:   /category
+_menu_card.admin.menu_card:
+    resource: "@MenuCardBundle/Controller"
+    prefix:   /menu-card

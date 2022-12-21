@@ -1,0 +1,14 @@
+{% extends "@AdminModule/Layout/form-delete.html.twig" %}
+
+{% block mainTitle %}{{ 'menu_card.menu_card'|trans({'%count%': 1}) }}{% endblock mainTitle %}
+{% block subTitle %}{{ 'admin.delete'|trans }}{% endblock subTitle %}
+
+{% block form_title %}
+    {% trans with {'%item%': 'het item <strong>' ~ menuCard.name ~ '</strong>' } %}admin.item.delete.warning{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    {{ form_widget(form.cancel) }}
+    {{ form_widget(form.submit) }}
+    {{ form_widget(form) }}
+{% endblock %}

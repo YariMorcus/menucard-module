@@ -1,0 +1,37 @@
+{% extends (baseTemplate is not empty) ? baseTemplate : '@theme/layout.html.twig' %}
+
+{% block content %}
+{# One line to achieve an empty element for styling purposes #}
+    <article class="m-menupage g-block">{% if menuPage.text is not empty -%}
+            <div class="m-menupage__container g-block__container">{{ menuPage.text|raw }}</div>
+        {%- endif %}
+        </article>
+
+    {% set categories = [] %}
+
+    {% if menuPage.menuCard is not null %}
+        {% for dish in menuPage.menuCard.dishes %}
+            {% if ( dish.category.name not in categories) and ( dish.category.active )%}
+                {% set categories = categories|merge([dish.category.name]) %}
+            {% endif %}
+        {% endfor %}
+
+        <section class="m-menupage__accordion">
+        {% for category in categories %}
+            {% set section_count = ( section_count | default(0) ) + 1 %}
+            <article>
+                <input type="checkbox" name="category_accordion" id="section{{section_count}}" class="m-menupage__accordion-input">
+                <label for="section{{section_count}}" class="m-menupage__accordion-label">{{category}}</label>
+                <div class="m-menupage__accordion-content">
+                    {% for dish in menuPage.menuCard.dishes %}
+                        {% if ( dish.category.name == category) and ( dish.active ) %}
+                            <div class="m-menupage__dish {{ dish.highlighted ? 'is-highlighted' : ''}}"><span class="m-menupage__dish-name">{{ dish.name }}</span><span class="m-menupage__dish-price">{{ dish.price|money }}</span>{% if dish.description is not null %}<span class="m-menupage__dish-description">{{ dish.description|striptags('<strong>,<em>')|raw }}</span>{% endif %}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </article>
+        {% endfor %}
+        </section>
+    {% endif %}
+
+{% endblock %}

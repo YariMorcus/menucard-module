@@ -1,0 +1,51 @@
+{% extends "@AdminModule/Layout/form-blank.html.twig" %}
+
+{% block mainTitle %}{{ 'menu_card.menu_card'|trans({'%count%': 1}) }}{% endblock mainTitle %}
+{% block subTitle %}{{ 'admin.edit'|trans }}{% endblock subTitle %}
+
+{% block toolbar %}
+    <div class="btn-group">
+        <a href="{{ path('_menu_card.admin.menu_card_index') }}" class="btn btn-default">
+            <em class="fa fa-angle-left"></em> {{ 'admin.cancel'|trans }}
+        </a>
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.save_and_edit) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'menu_card.menu_card'|trans({'%count%': 1}) }}</h3>
+        </div>
+
+        <div class="box-body with-border">
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.dishes) }}
+        </div>
+    </div>
+{% endblock %}
+
+{%- block form_sidebar -%}
+    <div class="box box-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'admin.settings.visibility'|trans }}</h3>
+        </div>
+
+        <div class="box-body">
+
+        </div>
+    </div>
+
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Gerente.Admin.Datepicker.init({selector: ".datepicker"});
+        });
+    </script>
+{% endblock %}

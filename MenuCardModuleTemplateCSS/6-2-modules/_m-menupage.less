@@ -1,0 +1,87 @@
+/*
+ * ---------------------------------------------------------------------------------------------------------------------
+ * 6.2 - COMPONENTS - MODULES: MENUPAGE
+ * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ */
+
+    .m-menupage__accordion {
+        margin-right: 15px;
+        margin-left: 15px;
+        max-width: 600px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+        border-radius: 5px;
+        background-color: @brand-primary;
+        overflow: hidden;
+    }
+
+    .m-menupage__accordion-input {
+        display: none;
+
+        &:checked ~ .m-menupage__accordion-content {
+            display: block;
+        }
+
+        &:checked ~ .m-menupage__accordion-label::after {
+            transform: translateY(-50%) rotate(0.5turn);
+        }
+    }
+
+    .m-menupage__accordion-input,
+    .m-menupage__accordion-label,
+    .m-menupage__dish-name,
+    .m-menupage__dish-price,
+    .m-menupage__dish-description {
+        .vertical-whitespace(-1);
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .m-menupage__accordion-label {
+        position: relative;
+        display: block;
+        color: @color--white;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.1s;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            width: 12px;
+            height: 6px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="50" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 100,0 50,50" style="fill:%23FFFFFF99;" /></svg>');
+            background-size: contain;
+            transition: transform .4s;
+        }
+    }
+
+    .m-menupage__accordion-content {
+        line-height: 1.5;
+        background-color: @color--white;
+        display: none;
+    }
+
+    .m-menupage__dish {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        grid-template-columns: repeat(2, 1fr);
+        padding-bottom: 0;
+    }
+
+    .m-menupage__dish-price {
+        text-align: right;
+    }
+
+    .m-menupage__dish-description {
+        display: block;
+        padding-top: 0;
+        grid-column: 1 / span 2;
+        text-indent: 20px;
+    }

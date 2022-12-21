@@ -1,0 +1,28 @@
+menu_card:
+    menu_card: Menukaart|Menukaarten
+    name: Naam
+    description: Beschrijving
+    dish: Gerecht|Gerechten
+    category: Categorie|Categorieën
+    category_placeholder: Selecteer uw categorie
+
+category:
+    name: Naam
+    description: Beschrijving
+    active: Actief
+    in_use_exception: Omdat er gerechten onder deze categorie vallen, kan deze categorie niet verwijderd worden.
+
+dish:
+    active: Actief
+    highlighted:
+        name: Uitgelicht
+        yes: Ja
+        no: Nee
+    price: Prijs
+    currency: Valuta
+
+menucard_module:
+    admin:
+        menucard: Menukaart|Menukaarten
+        category: Categorie|Categorieën
+        dish: Gerecht|Gerechten

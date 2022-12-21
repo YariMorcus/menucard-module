@@ -1,0 +1,37 @@
+{% extends "@AdminModule/Layout/form-blank-with-sidebar.html.twig" %}
+
+{% block mainTitle %}{{ 'admin.menupage'|trans({'%count%': 1}) }} : {{ menuPage.structure.name }}{% endblock mainTitle %}
+{% block subTitle %}{{ 'admin.edit'|trans }}{% endblock subTitle %}
+
+{%- block toolbar -%}
+    <div class="btn-group">
+        <a href="{{ path('_admin_core_structure_index', {'siteId': menuPage.structure.site.id, 'structureId': menuPage.structure.parentId}) }}" class="btn btn-default">
+            <em class="fa fa-angle-left"></em><span class="hidden-xs"> &nbsp; {{ 'admin.cancel'|trans }}</span>
+        </a>
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.save_and_edit) }}
+    </div>
+{%- endblock -%}
+
+{%- block form_title -%}
+    {% trans with {'%count%': 1} %}admin.menupage{% endtrans %}
+{%- endblock -%}
+
+{%- block content -%}
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'admin.structure'|trans({'%count%': 1}) }}</h3>
+        </div>
+        <div class="box-body pad">
+            {{ form_row(form.structure.title) }}
+            {{ form_row(form.menuCard) }}
+        </div>
+        <div class="box-body pad">
+            {{ form_widget(form.text) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{% block form_sidebar %}
+    {{ renderAdminWidgets(['admin.attachments', 'admin.seo'], menuPage.structure, menuPage.id) }}
+{% endblock %}

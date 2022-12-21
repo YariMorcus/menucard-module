@@ -1,0 +1,121 @@
+{% extends "@AdminModule/Layout/list.html.twig" %}
+
+{% block mainTitle %}{{ 'menu_card.dish'|trans({'%count%': 1}) }}{% endblock mainTitle %}
+{% block subTitle %}{{ 'admin.overview'|trans }}{% endblock subTitle %}
+
+{% block toolbar %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a class="btn btn-primary" href="{{ path('_menu_card.admin.dish_new') }}" title="{% trans with { '%item%': 'menu_card.dish'|trans({'%count%': 1}) } %}admin.item.add{% endtrans %}">
+            <strong><i class="fa fa-edit"></i> {% trans with {'%item%': 'menu_card.dish'|trans({'%count%': 1}) } %}admin.item.add{% endtrans %}</strong>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{%- block content -%}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box box-body table-responsive">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ 'menu_card.dish'|trans({'%count%': 10}) }}</h3>
+                <div class="box-tools">
+                </div>
+            </div>
+            <table class="listing table table-hover table-striped index-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ 'menu_card.name'|trans }}</th>
+                        <th>{{ 'dish.price'|trans }}</th>
+                        <th>{{ 'dish.highlighted.name'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for category in categories -%}
+                    <tr>
+                        <th colspan="{{ is_granted('ROLE_ADMIN') ? 4 : 3 }}">{{ category.name }}</th>
+                    </tr>
+                    {% for dish in category.dishes %}
+                        <tr>
+                            <td class="table-buttons-container">
+                                <span class="btn-group table-buttons">
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        <a href="{{ path('_menu_card.admin.dish_toggle_active', { 'id': dish.id }) }}" class="btn" title="{{ dish.active ? 'admin.active'|trans : 'admin.inactive'|trans }}">
+                                            <em class="fa {{ dish.active ? 'fa-eye' : 'fa-eye-slash text-danger' }}"></em>
+                                        </a>
+                                    {% else %}
+                                        <span class="btn text-disabled">
+                                               <em class="fa {{ dish.active ? 'fa-eye' : 'fa-eye-slash text-danger' }}"></em>
+                                        </span>
+                                    {% endif %}
+                                </span>
+                            </td>
+                            <td class="main-item">
+                                <div class="title">
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        <a href="{{ path('_menu_card.admin.dish_edit', { 'id': dish.id }) }}">
+                                    {% endif %}
+                                    {% if not dish.active %}<span class="text-disabled">{% else %}<strong>{% endif %}
+                                        {{ dish.name }}
+                                    {% if not dish.active %}</span>{% else %}</strong>{% endif %}
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div class="tools">
+                                    <ul>
+                                        <li>
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                                <a href="{{ path('_menu_card.admin.dish_edit', { 'id': dish.id }) }}">
+                                                    {{ 'admin.edit'|trans }}
+                                                </a>
+                                            {% else %}
+                                                <span class="text-disabled">{{ 'admin.edit'|trans }}</span>
+                                            {% endif %}
+                                        </li>
+                                        <li>
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                                <a href="{{ path('_menu_card.admin.dish_delete', { 'id': dish.id }) }}" class="text-danger">
+                                                    {{ 'admin.delete'|trans }}
+                                                </a>
+                                            {% else %}
+                                                <span class="text-disabled">{{ 'admin.delete'|trans }}</span>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                {{ dish.price|money }}
+                            </td>
+                            <td>
+                                {{ dish.highlighted ? 'dish.highlighted.yes'|trans : 'dish.highlighted.no'|trans }}
+                            </td>
+                        </tr>
+                    {%- else -%}
+                        <tr>
+                            <td colspan="8">Geen gerechten gevonden</td>
+                        </tr>
+                    {% endfor %}
+                        <tr>
+                            <td colspan="{{ is_granted('ROLE_ADMIN') ? 4 : 3 }}">
+                                <a href="{{ path('_menu_card.admin.dish_new_in_category', { 'categoryId': category.id } ) }}" class="btn">
+                                    + Gerecht toevoegen
+                                </a>
+                            </td>
+                        </tr>
+                {%- endfor %}
+                </tbody>
+            </table>
+            <div class="box-footer">
+                <div class="box-tools">
+                    <div class="pagination no-margin pull-right">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

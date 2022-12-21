@@ -1,0 +1,26 @@
+menu_card:
+    menu_card: Menu card|Menu cards
+    name: Name
+    description: Description
+    dish: Dish|Dishes
+    category: Category|Categories
+    category_placeholder: Select a category
+
+category:
+    name: Name
+    description: Description
+    active: Active
+    in_use_exception: The category cannot be removed due to dishes falling underneath it.
+
+dish:
+    active: Active
+    highlighted:
+        name: Higlighted
+    price: Price
+    currency: Currency
+
+menucard_module:
+    admin:
+        menucard: Menu card|Menu cards
+        category: Category|Categories
+        dish: Dish|Dishes

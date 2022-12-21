@@ -1,0 +1,72 @@
+{% extends "@AdminModule/Layout/list.html.twig" %}
+
+{% block mainTitle %}{{ 'menu_card.menu_card'|trans({'%count%': 1}) }}{% endblock mainTitle %}
+{% block subTitle %}{{ 'admin.overview'|trans }}{% endblock subTitle %}
+
+{% block toolbar %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a class="btn btn-primary" href="{{ path('_menu_card.admin.menu_card_new') }}" title="{% trans with { '%item%': 'menu_card.menu_card'|trans({'%count%': 1}) } %}admin.item.add{% endtrans %}">
+            <strong><i class="fa fa-edit"></i> {% trans with {'%item%': 'menu_card.menu_card'|trans({'%count%': 1}) } %}admin.item.add{% endtrans %}</strong>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{%- block content -%}
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box box-primary table-responsive">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ 'menu_card.menu_card'|trans({'%count%': 10}) }}</h3>
+                <div class="box-tools">
+                </div>
+            </div>
+            <table class="listing table table-hover table-striped index-table">
+                <thead>
+                    <tr>
+                        <th>{{ 'menu_card.name'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for menu_card in pagination -%}
+                    <tr>
+                        <td>
+                            <div class="title">
+                                <a href="{{ path('_menu_card.admin.menu_card_edit', {'id': menu_card.id} ) }}" {# not menu_card.isActive ? 'class="text-disabled"' #}>
+                                    {{ menu_card.name }}
+                                </a>
+                            </div>
+                            <div class="tools">
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('_menu_card.admin.menu_card_edit', {'id': menu_card.id} ) }}">
+                                            {{ 'admin.edit'|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('_menu_card.admin.menu_card_delete', {'id': menu_card.id} ) }}" class="text-danger">
+                                            {{ 'admin.delete'|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {%- else -%}
+                    <tr>
+                        <td colspan="4">Geen menukaarten gevonden</td>
+                    </tr>
+                {%- endfor %}
+                </tbody>
+            </table>
+            <div class="box-footer">
+                <div class="box-tools">
+                    <div class="pagination no-margin pull-right">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
